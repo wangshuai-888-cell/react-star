@@ -27,33 +27,11 @@ export default (params) => {
       },
     },
 
-    css: {
-      preprocessorOptions: {
-        less: {
-          modifyVars: {
-            // 如需自定义组件其他 token, 在此处配置
-          },
-        },
-      },
-    },
-
-    plugins: [
-      react(),
-    ],
-
-    build: {
-      cssCodeSplit: false,
-    },
+    plugins: [react()],
 
     server: {
       host: '0.0.0.0',
       port: 3003,
-      proxy: {
-        '/api': {
-          target: 'https://service-exndqyuk-1257786608.gz.apigw.tencentcs.com',
-          changeOrigin: true,
-        },
-      },
     },
   };
 };
