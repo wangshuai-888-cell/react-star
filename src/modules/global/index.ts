@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ETheme } from 'types/index.d';
 import { RootState } from '../store';
 
 const namespace = 'global';
@@ -7,16 +8,16 @@ export enum ELayout {
   side = 1,
   fullPage,
 }
-
-export const selectGlobal = (state: RootState) => state.global;
-
 export interface IGlobalState {
   layout: ELayout;
   setting: boolean;
   isFullPage: boolean;
   showFooter: boolean;
   showBreadcrumbs: boolean;
+  theme: ETheme;
 }
+
+const defaultTheme = ETheme.light;
 
 const initialState: IGlobalState = {
   layout: ELayout.side,
@@ -24,6 +25,7 @@ const initialState: IGlobalState = {
   isFullPage: false,
   showFooter: true,
   showBreadcrumbs: true,
+  theme: defaultTheme,
 };
 
 // 创建带有命名空间的reducer
@@ -39,6 +41,8 @@ const globalSlice = createSlice({
     },
   },
 });
+
+export const selectGlobal = (state: RootState) => state.global;
 
 export const { switchFullPage } = globalSlice.actions;
 
