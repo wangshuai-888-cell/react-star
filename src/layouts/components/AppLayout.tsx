@@ -22,4 +22,4 @@ const FullPageLayout = React.memo(() => <Content />);
 export default {
   [ELayout.side]: SideLayout,
   [ELayout.fullPage]: FullPageLayout,
-}
+};

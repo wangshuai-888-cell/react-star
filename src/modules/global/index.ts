@@ -9,9 +9,11 @@ export enum ELayout {
   fullPage,
 }
 export interface IGlobalState {
+  collapsed: boolean;
   layout: ELayout;
   setting: boolean;
   isFullPage: boolean;
+  showHeader: boolean;
   showFooter: boolean;
   showBreadcrumbs: boolean;
   theme: ETheme;
@@ -20,9 +22,11 @@ export interface IGlobalState {
 const defaultTheme = ETheme.light;
 
 const initialState: IGlobalState = {
+  collapsed: window.innerWidth < 1000, // 宽度小于1000 菜单闭合
   layout: ELayout.side,
   setting: false,
   isFullPage: false,
+  showHeader: true,
   showFooter: true,
   showBreadcrumbs: true,
   theme: defaultTheme,
@@ -33,6 +37,13 @@ const globalSlice = createSlice({
   name: namespace,
   initialState,
   reducers: {
+    toggleMenu: (state, action) => {
+      if (action.payload === null) {
+        state.collapsed = !state.collapsed;
+      } else {
+        state.collapsed = !!action.payload;
+      }
+    },
     toggleSetting: (state) => {
       state.setting = !state.setting;
     },
@@ -44,6 +55,6 @@ const globalSlice = createSlice({
 
 export const selectGlobal = (state: RootState) => state.global;
 
-export const { switchFullPage } = globalSlice.actions;
+export const { toggleMenu, toggleSetting, switchFullPage } = globalSlice.actions;
 
 export default globalSlice.reducer;

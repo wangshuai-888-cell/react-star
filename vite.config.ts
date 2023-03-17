@@ -1,6 +1,7 @@
 import path from 'path';
 import { loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import svgr from '@honkhonk/vite-plugin-svgr';
 
 const CWD = process.cwd();
 
@@ -27,7 +28,7 @@ export default (params) => {
       },
     },
 
-    plugins: [react()],
+    plugins: [svgr(), react()],
 
     server: {
       host: '0.0.0.0',
