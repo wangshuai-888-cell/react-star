@@ -27,7 +27,7 @@ const routes: IRouter[] = [
   },
   {
     path: '/',
-    redirect: '/login/index',
+    redirect: '/login',
   },
 ];
 

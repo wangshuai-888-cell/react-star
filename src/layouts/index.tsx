@@ -1,8 +1,8 @@
 import React, { memo, useEffect } from 'react';
-import { Drawer, Layout } from 'tdesign-react';
+import { Layout } from 'tdesign-react';
 import throttle from 'lodash/throttle';
 import { useAppSelector, useAppDispatch } from 'modules/store';
-import { selectGlobal, toggleSetting, toggleMenu, ELayout, switchTheme } from 'modules/global';
+import { selectGlobal, toggleMenu, ELayout, switchTheme } from 'modules/global';
 import AppLayout from './components/AppLayout';
 import Style from './index.module.less';
 
@@ -15,6 +15,8 @@ React.memo来缓存组件，这样只有当传入组件的状态值发生变化�
 export default memo(() => {
   const globalState = useAppSelector(selectGlobal);
   const dispatch = useAppDispatch();
+  console.log(globalState.isFullPage, ELayout.fullPage, globalState.layout);
+
   const AppContainer = AppLayout[globalState.isFullPage ? ELayout.fullPage : globalState.layout];
 
   useEffect(() => {
@@ -35,14 +37,6 @@ export default memo(() => {
   return (
     <Layout className={Style.panel}>
       <AppContainer />
-      <Drawer
-        destroyOnClose
-        visible={globalState.setting}
-        size='458px'
-        footer={false}
-        header='页面配置'
-        onClose={() => dispatch(toggleSetting())}
-      ></Drawer>
     </Layout>
   );
 });
