@@ -1,15 +1,20 @@
-import React, { memo, Suspense } from 'react';
+import React, { Suspense, memo } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { Layout, Loading } from 'tdesign-react';
 import routers, { IRouter } from 'router';
-import { Loading, Layout } from 'tdesign-react';
+import { resolve } from 'utils/path';
 import Page from './Page';
 import Style from './AppRouter.module.less';
-import { resolve } from 'utils/path';
 
 const { Content } = Layout;
 
 type TRenderRoutes = (routes: IRouter[], parentPath?: string, breadcrumbs?: string[]) => React.ReactNode[];
-
+/**
+ * 渲染应用路由
+ * @param routes
+ * @param parentPath
+ * @param breadcrumb
+ */
 const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =>
   routes.map((route, index: number) => {
     const { Component, children, redirect, meta } = route;

@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Drawer, Layout } from 'tdesign-react';
-import { useAppSelector } from 'modules/store';
-import { selectGlobal, ELayout } from 'modules/global';
+import throttle from 'lodash/throttle';
+import { useAppSelector, useAppDispatch } from 'modules/store';
+import { selectGlobal, toggleSetting, toggleMenu, ELayout, switchTheme } from 'modules/global';
 import AppLayout from './components/AppLayout';
 import Style from './index.module.less';
 
@@ -13,12 +14,35 @@ React.memo来缓存组件，这样只有当传入组件的状态值发生变化�
 
 export default memo(() => {
   const globalState = useAppSelector(selectGlobal);
+  const dispatch = useAppDispatch();
   const AppContainer = AppLayout[globalState.isFullPage ? ELayout.fullPage : globalState.layout];
+
+  useEffect(() => {
+    dispatch(switchTheme(globalState.theme));
+    const handleResize = throttle(() => {
+      if (window.innerWidth < 900) {
+        dispatch(toggleMenu(true));
+      } else if (window.innerWidth > 1000) {
+        dispatch(toggleMenu(false));
+      }
+    }, 100);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <Layout className={Style.panel}>
       <AppContainer />
-      <Drawer visible={globalState.setting}></Drawer>
+      <Drawer
+        destroyOnClose
+        visible={globalState.setting}
+        size='458px'
+        footer={false}
+        header='页面配置'
+        onClose={() => dispatch(toggleSetting())}
+      ></Drawer>
     </Layout>
   );
 });

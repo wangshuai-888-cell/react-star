@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
+import login from './modules/login';
 
 export interface IRouter {
   path: string;
@@ -26,9 +27,9 @@ const routes: IRouter[] = [
   },
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/login/index',
   },
 ];
 
-const allRoutes = [...routes];
+const allRoutes = [...routes, ...login];
 export default allRoutes;

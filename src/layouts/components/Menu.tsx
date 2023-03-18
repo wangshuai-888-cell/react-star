@@ -1,18 +1,27 @@
 import React, { memo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { selectGlobal } from 'modules/global';
-import { useAppSelector } from 'modules/store';
 import { Menu, MenuValue } from 'tdesign-react';
 import router, { IRouter } from 'router';
 import { resolve } from 'utils/path';
+import { useAppSelector } from 'modules/store';
+import { selectGlobal } from 'modules/global';
+import MenuLogo from './MenuLogo';
+import Style from './Menu.module.less';
 
-const { SubMenu, HeadMenu, MenuItem } = Menu;
+const { SubMenu, MenuItem, HeadMenu } = Menu;
+
+interface IMenuProps {
+  showLogo?: boolean;
+  showOperation?: boolean;
+}
 
 const renderMenuItems = (menu: IRouter[], parentPath = '') => {
   const navigate = useNavigate();
   return menu.map((item) => {
     const { children, meta, path } = item;
+
     if (!meta || meta?.hidden === true) {
+      // 无meta信息 或 hidden == true，路由不显示为菜单
       return null;
     }
 
@@ -58,10 +67,13 @@ const renderMenuItems = (menu: IRouter[], parentPath = '') => {
   });
 };
 
+/**
+ * 顶部菜单
+ */
 export const HeaderMenu = memo(() => {
   const globalState = useAppSelector(selectGlobal);
   const location = useLocation();
-  const [active, setActive] = useState<MenuValue>(location.pathname);
+  const [active, setActive] = useState<MenuValue>(location.pathname); // todo
 
   return (
     <HeadMenu
@@ -73,5 +85,31 @@ export const HeaderMenu = memo(() => {
     >
       {renderMenuItems(router)}
     </HeadMenu>
+  );
+});
+
+/**
+ * 左侧菜单
+ */
+export default memo((props: IMenuProps) => {
+  const location = useLocation();
+  const globalState = useAppSelector(selectGlobal);
+
+  const { version } = globalState;
+  const bottomText = globalState.collapsed ? version : `TDesign Starter ${version}`;
+
+  return (
+    <Menu
+      width='232px'
+      style={{ flexShrink: 0, height: '100%' }}
+      className={Style.menuPanel2}
+      value={location.pathname}
+      theme={globalState.theme}
+      collapsed={globalState.collapsed}
+      operations={props.showOperation ? <div className={Style.menuTip}>{bottomText}</div> : undefined}
+      logo={props.showLogo ? <MenuLogo collapsed={globalState.collapsed} /> : undefined}
+    >
+      {renderMenuItems(router)}
+    </Menu>
   );
 });

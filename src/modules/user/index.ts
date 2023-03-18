@@ -4,6 +4,7 @@ const namespace = 'user';
 
 export const login = createAsyncThunk(`${namespace}/login`, async (userInfo: Record<string, unknown>) => {
   const mockLogin = async (userInfo: Record<string, unknown>) => {
+    console.log(userInfo);
     return {
       code: 200,
       message: '登陆成功',
