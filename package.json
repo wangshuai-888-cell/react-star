@@ -10,6 +10,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "classnames": "^2.3.2",
+    "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@honkhonk/vite-plugin-svgr": "^1.1.0",
     "@types/node": "^18.15.3",
+    "@types/qrcode.react": "^1.0.2",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-router-dom": "^5.3.3",
