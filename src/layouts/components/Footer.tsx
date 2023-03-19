@@ -15,7 +15,7 @@ const Footer = () => {
     <TFooter>
       <Row justify='center'>Copyright © 2022-{new Date().getFullYear()} Xiaowang. All Rights Reserved</Row>
     </TFooter>
-  )
+  );
 };
 
 export default React.memo(Footer);

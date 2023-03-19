@@ -15,7 +15,6 @@ React.memo来缓存组件，这样只有当传入组件的状态值发生变化�
 export default memo(() => {
   const globalState = useAppSelector(selectGlobal);
   const dispatch = useAppDispatch();
-  console.log(globalState.isFullPage, ELayout.fullPage, globalState.layout);
 
   const AppContainer = AppLayout[globalState.isFullPage ? ELayout.fullPage : globalState.layout];
 
